@@ -14,7 +14,21 @@ CREATE TABLE Product.product (
   	supplier_id INT
 );
 
-select  from Product.product;
+CREATE TABLE cart (
+	cart_id INT AUTO_INCREMENT PRIMARY KEY,
+	user_id int NOT NULL	
+);
+
+
+CREATE TABLE orders(
+	order_id INT AUTO_INCREMENT PRIMARY KEY,
+	cart_id INT,
+	product_id INT,
+	FOREIGN KEY (cart_id) REFERENCES cart (cart_id),
+	FOREIGN KEY (product_id) REFERENCES product (product_id),
+	quantity INT
+);
+
 
 
 

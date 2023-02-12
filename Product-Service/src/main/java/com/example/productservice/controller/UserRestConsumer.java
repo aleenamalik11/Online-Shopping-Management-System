@@ -11,7 +11,7 @@ public interface UserRestConsumer {
     @RequestMapping("/user/login")
     public boolean userLogin(@RequestBody User user);
     @RequestMapping("/user/signup")
-    public void userSignUp(@RequestBody User user);
+    public User userSignUp(@RequestBody User user);
 
     @RequestMapping("/adminLogin")
     public boolean adminLogin(@RequestBody User user);

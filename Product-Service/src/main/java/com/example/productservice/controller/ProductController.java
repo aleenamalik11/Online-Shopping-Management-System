@@ -4,6 +4,8 @@ import com.example.productservice.entity.Product;
 import com.example.productservice.entity.User;
 import com.example.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
@@ -20,29 +23,30 @@ public class ProductController {
 
     @Autowired
     UserRestConsumer consumer;
-    @RequestMapping("/login")
-    public boolean userLogin(@RequestBody User user, HttpSession session){
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> userLogin(@RequestBody User user, HttpSession session){
        boolean userValidated = consumer.userLogin(user);
        if(userValidated){
-           session.setAttribute(user.getUsername(), user.getUsername());
+           session.setAttribute(user.getUsername(), user.getUsername());           
        }
-       return userValidated;
+       return ResponseEntity.ok(userValidated);
     }
 
     @RequestMapping("/adminLogin")
-    public boolean adminLogin(@RequestBody User user, HttpSession session){
+    public ResponseEntity<Boolean> adminLogin(@RequestBody User user, HttpSession session){
         boolean adminValidated = consumer.adminLogin(user);
         if(adminValidated){
             session.setAttribute(user.getUsername(), user.getUsername());
         }
-        return adminValidated;
+        return ResponseEntity.ok(adminValidated);
     }
     @RequestMapping("/signup")
-    public void userSignUp(@RequestBody User user){
-        consumer.userSignUp(user);
+    public User userSignUp(@RequestBody User user){
+        return consumer.userSignUp(user);
     }
     @RequestMapping("/all")
     private List<Product> getAllProducts(@RequestBody User user, HttpServletRequest request){
+    	//request.getSession().getId()
         if(request.getSession().getAttribute(user.getUsername())!=null) {
             return productService.findAllProducts();
         }

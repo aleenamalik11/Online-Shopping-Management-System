@@ -38,7 +38,7 @@ public class RestController {
     }
 
     @RequestMapping(value="/signup", method= RequestMethod.POST)
-    public void userSignup(@RequestBody User user)
+    public User userSignup(@RequestBody User user)
     {
         Role role = new Role();
         role.setId(1);
@@ -47,5 +47,6 @@ public class RestController {
         user.setEnabled(true);
         user.setRole(role);
         userService.saveOrUpdate(user);
+        return user;
     }
 }

@@ -28,9 +28,9 @@ public class UserService
     {
         return userRepository.getUserByUsername(username);
     }
-    public void saveOrUpdate(User User)
+    public User saveOrUpdate(User User)
     {
-        userRepository.save(User);
+        return userRepository.save(User);
     }
     //deleting a specific record
     public void delete(Long id)

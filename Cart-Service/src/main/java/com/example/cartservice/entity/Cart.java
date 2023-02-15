@@ -1,15 +1,10 @@
 package com.example.cartservice.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
-
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name="cart")
 public class Cart {
@@ -22,4 +17,42 @@ public class Cart {
     @Column(name = "user_id")
     private @NonNull Integer userId;
 
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Orders> orders;
+
+    @Column(name = "total_price")
+    private int totalPrice;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @NonNull
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(@NonNull Integer userId) {
+        this.userId = userId;
+    }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 }
